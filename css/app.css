@@ -1,0 +1,232 @@
+p, span, a, div, li, body {
+  font-family: "Mada", sans-serif !important;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Alata", sans-serif !important;
+}
+
+h2 {
+  color: #06283D !important;
+}
+
+header {
+  background-color: #06283D;
+  color: white;
+  padding: 20px 0 20px 0;
+}
+header li {
+  list-style: none;
+}
+header li a {
+  color: white;
+  margin: 0 5px;
+}
+header li a:hover {
+  color: #b9b9b9;
+}
+
+.textura_burbujas {
+  position: absolute;
+  top: 1100px;
+  z-index: -1;
+}
+
+.descripcion {
+  margin: 120px 0;
+}
+.descripcion .large-6:first-child {
+  background-color: #DFF6FF;
+}
+.descripcion .large-6:first-child div {
+  width: 61%;
+  margin: 30px 0 0 auto;
+  padding-right: 40px;
+}
+.descripcion img {
+  border-radius: 0px 20px 20px 0px;
+  height: 500px !important;
+  width: 61%;
+}
+.descripcion a {
+  font-family: "Alata", sans-serif !important;
+}
+.descripcion a i {
+  padding-left: 5px;
+  position: relative;
+  top: -1px;
+}
+
+.proyectos img {
+  border-radius: 20px;
+  height: 450px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.proyectos h3 a {
+  font-size: 25px;
+  color: #06283D !important;
+  font-family: "Alata", sans-serif !important;
+}
+.proyectos h3 a i {
+  position: relative;
+  font-size: 20px;
+  top: -2px;
+}
+.proyectos .large-6 {
+  margin-bottom: 25px;
+}
+.proyectos .large-6 .button:nth-child(3) {
+  margin: 0px 10px 0 0px !important;
+}
+.proyectos .large-6 .button {
+  margin: 0px 10px;
+  padding: 10px 42px;
+  font-size: 17px;
+}
+
+.cursos h3 {
+  margin-bottom: 25px;
+  font-size: 25px;
+}
+.cursos h3, .cursos h4 {
+  color: #06283D !important;
+}
+.cursos h4 {
+  font-size: 16px;
+}
+.cursos .grid-x {
+  position: relative;
+}
+.cursos .grid-x div {
+  border-left: 2px solid #06283D !important;
+  padding-left: 15px;
+}
+.cursos .grid-x div h4, .cursos .grid-x div p {
+  position: relative;
+  top: -7px;
+}
+.cursos .grid-x div:before {
+  content: "";
+  background-color: #06283D;
+  position: absolute;
+  left: -5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.cursos .grid-x div:nth-child(5) {
+  border-left: 0px solid #06283D !important;
+}
+
+.contacto {
+  background-color: #DFF6FF;
+  width: 81% !important;
+  margin: 40px 0 0 auto;
+  padding: 30px 30px 20px;
+  border-radius: 20px 0px 0px 0px;
+}
+.contacto .datos_contacto {
+  padding-left: 40px;
+}
+.contacto .datos_contacto a {
+  font-size: 25px;
+  color: #1779ba;
+}
+.contacto h2 {
+  color: #0D2A70;
+  margin-bottom: 30px;
+}
+.contacto .blog_post {
+  background-color: white;
+  border-radius: 20px;
+  width: 90% !important;
+  margin: 0 auto 40px 0;
+}
+.contacto .blog_post .cell div {
+  padding: 15px;
+}
+.contacto .blog_post .cell div small {
+  color: #4d4d4d;
+}
+.contacto .blog_post .cell div hr {
+  margin: 10px auto !important;
+}
+.contacto .blog_post .cell div span {
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+  font-size: 13px;
+}
+.contacto .blog_post .cell div h4 {
+  margin-top: 10px;
+  color: #0D2A70;
+}
+.contacto .blog_post .cell:first-child {
+  text-align: right;
+}
+.contacto .blog_post .cell:first-child img {
+  height: 270px;
+  width: 100%;
+  border-radius: 10px 0px 0px 10px;
+}
+
+footer div {
+  background-color: #06283D;
+  padding: 15px 0;
+  color: white;
+}
+footer h4 {
+  font-size: 20px;
+}
+
+@media (max-width: 1500px) {
+  .descripcion {
+    margin: 70px 0;
+  }
+  .descripcion .large-6:first-child div {
+    width: 81%;
+  }
+  .descripcion img {
+    width: 81%;
+  }
+  .contacto {
+    width: 91% !important;
+  }
+}
+@media (max-width: 900px) {
+  .descripcion .large-6:first-child div {
+    width: 100%;
+    margin: 0px 0 0 auto;
+    padding: 16px;
+  }
+  .descripcion img {
+    width: 100%;
+    height: 390px !important;
+    border-radius: 0px 0px 0px 0px;
+  }
+  .proyectos img {
+    height: 285px;
+  }
+  .contacto {
+    width: 100% !important;
+  }
+  .contacto .datos_contacto {
+    padding-left: 0px;
+    margin-top: 30px;
+  }
+  .contacto h2 {
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 600px) {
+  .descripcion .large-6:last-child {
+    display: none;
+  }
+  .proyectos img {
+    height: 300px;
+    margin-bottom: 20px;
+  }
+}
+
+/*# sourceMappingURL=app.css.map */
