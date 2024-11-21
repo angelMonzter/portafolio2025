@@ -1,11 +1,60 @@
+// Definir variables para los colores
+$color-background-light: white
+$color-text-light: black
+$color-box-blue-light: #DFF6FF
+//$color-titles-light:
+
+$color-background-dark: #06283D
+$color-text-dark: white
+$color-box-blue-dark: #629FB7
+
 p, span, a, div, li, body
 	font-family: "Mada", sans-serif !important
 
 h1, h2, h3, h4, h5
 	font-family: "Alata", sans-serif !important
-
 h2
 	color:  #06283D!important
+body
+	transition: all 0.3s ease
+
+// Modo claro
+.light-mode
+	background-color: $color-background-light
+	color: $color-text-light
+	
+	button
+		background-color: #f0f0f0
+		color: $color-text-light
+	.box-blue
+		background-color: $color-box-blue-light
+// Modo oscuro
+.dark-mode
+	background-color: $color-background-dark
+	color: $color-text-dark
+	header
+		background-color: #021C2B
+	footer
+		div
+			background-color: #021C2B
+	button
+		background-color: #333
+		color: $color-text-dark
+	.box-blue
+		background-color: $color-box-blue-dark
+	.button
+		border-color: #DFF6FF!important
+		color: #DFF6FF!important
+	h2
+		color: #DFF6FF!important
+	.proyectos
+		h3
+			a
+				color: #DFF6FF!important
+	.contacto 
+		.datos_contacto 
+			a
+				color: #fff
 
 header
 	background-color: #06283D
@@ -18,6 +67,13 @@ header
 			margin: 0 5px
 			&:hover
 				color: #b9b9b9
+	div
+		i
+			font-size: 25px
+			margin-top: 25px
+			cursor: pointer
+		.fa-moon
+			display: none
 .textura_burbujas
 	position: absolute
 	top: 1100px
@@ -26,7 +82,6 @@ header
 .descripcion
 	margin: 120px 0
 	.large-6:first-child
-		background-color: #DFF6FF
 		div
 			width: 61%
 			margin: 30px 0 0 auto
@@ -42,7 +97,6 @@ header
 			position: relative
 			top: -1px
 
-
 .proyectos
 	img
 		border-radius: 20px
@@ -57,17 +111,40 @@ header
 			position: relative
 			font-size: 20px
 			top: -2px
+			transition: transform 0.3s ease
 			//left: -5px
 			//transform: rotate(320deg)
 	.large-6
 		margin-bottom: 25px
-		.button:nth-child(3)
-			margin: 0px 10px 0 0px!important
 		.button
 			margin: 0px 10px
 			padding: 10px 42px 
 			font-size: 17px
+		.proyectos_botones
+			.button:nth-child(1)
+				margin: 0px 10px 0 0px!important
 
+.proyectos_botones
+	span
+		font-family: "Alata", sans-serif !important
+.pagina_proyectos
+	margin-bottom: 50px
+	h2
+		margin-top: 50px
+		color: #06283D
+	a
+		font-family: "Alata", sans-serif !important
+		font-size: 25px
+		color: #06283D
+	p
+		line-height: 22px
+	span
+		border: 1px solid #1779ba
+		padding: 5px 10px
+		border-radius: 5px 10px
+		font-size: 13px
+		font-family: "Alata", sans-serif !important
+		color: #1779ba
 .cursos
 	h3
 		margin-bottom: 25px
@@ -183,3 +260,14 @@ footer
 	.proyectos img
 		height: 300px
 		margin-bottom: 20px
+	footer
+		h4
+			font-size: 15px
+	header
+		div
+			i
+				font-size: 20px
+				margin-top: 10px
+				cursor: pointer
+	.proyectos .large-6 .button
+		display: ruby-base-container

@@ -11,7 +11,7 @@
   <link href="css/app.css" rel="stylesheet"> 
 
   <!--meta description-->
-  <meta name="description" content="Desarrollador Web con 3 años de experiencia laboral en empresas y 1 como freelance me especializo en Desarrollo web utilizando las tecnologías, HTML, CSS, JS, PHP, WORDPRESS y derivados de estas.">
+  <meta name="description" content="Me especializo en Desarrollo web utilizando tecnologías como, HTML, CSS, JS, PHP, WORDPRESS y derivados de estas, como SASS, REACT, CODEIGNITER, LARAVEL y REACT NATIVE para desarrollo mobil.">
   <meta name="keywords" content="Angel Velazquez, angelvelazquez, desarrollo, desarrollador web, web, html, css, freelance, portafolio, software, php, js, web developer">
   <meta property="og:title" content="Angel Velazquez" />
   <meta property="og:type" content="article" />
@@ -28,12 +28,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.9.0/dist/css/foundation.min.css" crossorigin="anonymous">
 </head>
 
-<body class="">
+<body class="light-mode">
 
   <header>
     <div class="grid-x text-center">
-      <div class="cell">
+      <div class="cell large-2 small-2">
+        
+      </div>
+      <div class="cell large-auto small-8">
         <h1>Angel / Velazquez</h1>
+      </div>
+      <div class="cell large-2 small-2">
+        <i class="fa-solid fa-moon" id="toggle-theme-light"></i>
+        <i class="fa-regular fa-sun" id="toggle-theme-dark"></i>
       </div>
       <!-- <nav class="cell text-center">
         <ul>
@@ -51,7 +58,7 @@
 
     <section class="descripcion">
       <div class="grid-x">
-          <div class="cell large-6 medium-6">
+          <div class="cell large-6 medium-6 box-blue">
             <div>
               <h2>Desarrollador Web</h2>
               <p>Me  especializo en Desarrollo web utilizando tecnologías como, HTML, CSS, JS, PHP, WORDPRESS y derivados de estas, como SASS, REACT, CODEIGNITER, LARAVEL y REACT NATIVE para desarrollo mobil.</p>
@@ -78,15 +85,20 @@
         <div class="large-6 medium-6 cell">
           <h2>Proyectos</h2>
           <p>Mi portafolio de proyectos más recientes a continuación.</p>
-          <a href="https://github.com/angelMonzter" target="_blank" class="button hollow primary">
-            <i class="fa-brands fa-github"></i>
-          </a>
-          <a href="https://codepen.io/angel-efren-albarran-velazquez" target="_blank" class="button hollow primary">
-            <i class="fa-brands fa-codepen"></i>
-          </a>
-          <!-- <a href="#!" class="button hollow primary">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a> -->
+          <div class="proyectos_botones">
+            <a href="https://github.com/angelMonzter" target="_blank" class="button hollow primary">
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+            </a>
+            <a href="https://codepen.io/angel-efren-albarran-velazquez" target="_blank" class="button hollow primary">
+              <i class="fa-brands fa-codepen"></i>
+              <span>Codepen</span>
+            </a>
+            <!-- <a href="proyectos.html" class="button hollow primary">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span>Ver más</span>
+            </a>  -->
+          </div>
         </div>
         <div class="large-6 medium-6 cell">
           <img src="img/proyecto1.png">
@@ -144,7 +156,7 @@
       </div>
     </section> -->
 
-    <section class="contacto">
+    <section class="contacto box-blue">
       <div class="grid-x">
         <div class="large-6 cell">
           <h2>Formación</h2>

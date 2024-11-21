@@ -10,6 +10,53 @@ h2 {
   color: #06283D !important;
 }
 
+body {
+  transition: all 0.3s ease;
+}
+
+.light-mode {
+  background-color: white;
+  color: black;
+}
+.light-mode button {
+  background-color: #f0f0f0;
+  color: black;
+}
+.light-mode .box-blue {
+  background-color: #DFF6FF;
+}
+
+.dark-mode {
+  background-color: #06283D;
+  color: white;
+}
+.dark-mode header {
+  background-color: #021C2B;
+}
+.dark-mode footer div {
+  background-color: #021C2B;
+}
+.dark-mode button {
+  background-color: #333;
+  color: white;
+}
+.dark-mode .box-blue {
+  background-color: #629FB7;
+}
+.dark-mode .button {
+  border-color: #DFF6FF !important;
+  color: #DFF6FF !important;
+}
+.dark-mode h2 {
+  color: #DFF6FF !important;
+}
+.dark-mode .proyectos h3 a {
+  color: #DFF6FF !important;
+}
+.dark-mode .contacto .datos_contacto a {
+  color: #fff;
+}
+
 header {
   background-color: #06283D;
   color: white;
@@ -25,6 +72,14 @@ header li a {
 header li a:hover {
   color: #b9b9b9;
 }
+header div i {
+  font-size: 25px;
+  margin-top: 25px;
+  cursor: pointer;
+}
+header div .fa-moon {
+  display: none;
+}
 
 .textura_burbujas {
   position: absolute;
@@ -34,9 +89,6 @@ header li a:hover {
 
 .descripcion {
   margin: 120px 0;
-}
-.descripcion .large-6:first-child {
-  background-color: #DFF6FF;
 }
 .descripcion .large-6:first-child div {
   width: 61%;
@@ -72,17 +124,46 @@ header li a:hover {
   position: relative;
   font-size: 20px;
   top: -2px;
+  transition: transform 0.3s ease;
 }
 .proyectos .large-6 {
   margin-bottom: 25px;
-}
-.proyectos .large-6 .button:nth-child(3) {
-  margin: 0px 10px 0 0px !important;
 }
 .proyectos .large-6 .button {
   margin: 0px 10px;
   padding: 10px 42px;
   font-size: 17px;
+}
+.proyectos .large-6 .proyectos_botones .button:nth-child(1) {
+  margin: 0px 10px 0 0px !important;
+}
+
+.proyectos_botones span {
+  font-family: "Alata", sans-serif !important;
+}
+
+.pagina_proyectos {
+  margin-bottom: 50px;
+}
+.pagina_proyectos h2 {
+  margin-top: 50px;
+  color: #06283D;
+}
+.pagina_proyectos a {
+  font-family: "Alata", sans-serif !important;
+  font-size: 25px;
+  color: #06283D;
+}
+.pagina_proyectos p {
+  line-height: 22px;
+}
+.pagina_proyectos span {
+  border: 1px solid #1779ba;
+  padding: 5px 10px;
+  border-radius: 5px 10px;
+  font-size: 13px;
+  font-family: "Alata", sans-serif !important;
+  color: #1779ba;
 }
 
 .cursos h3 {
@@ -226,6 +307,17 @@ footer h4 {
   .proyectos img {
     height: 300px;
     margin-bottom: 20px;
+  }
+  footer h4 {
+    font-size: 15px;
+  }
+  header div i {
+    font-size: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .proyectos .large-6 .button {
+    display: ruby-base-container;
   }
 }
 
