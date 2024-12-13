@@ -56,6 +56,13 @@ body {
 .dark-mode .contacto .datos_contacto a {
   color: #fff;
 }
+.dark-mode .pagina_proyectos a {
+  color: #DFF6FF;
+}
+.dark-mode .pagina_proyectos span {
+  border: 1px solid #DFF6FF;
+  color: #DFF6FF;
+}
 
 header {
   background-color: #06283D;
