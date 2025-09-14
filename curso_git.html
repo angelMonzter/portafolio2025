@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Curso Git - flujo main → develop → feature</title>
+    <style>
+    :root {
+        --bg: #0f1724;
+        --card: #0b1220;
+        --muted: #94a3b8;
+        --accent: #60a5fa;
+        --glass: rgba(255, 255, 255, 0.03)
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+        color: #e6eef7;
+        background: linear-gradient(180deg, #041025 0%, #071426 60%);
+    }
+
+    .wrap {
+        max-width: 1100px;
+        margin: 28px auto;
+        padding: 24px
+    }
+
+    header {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        margin-bottom: 18px
+    }
+
+    h1 {
+        font-size: 20px;
+        margin: 0
+    }
+
+    .meta {
+        color: var(--muted);
+        font-size: 13px
+    }
+
+    .layout {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 18px
+    }
+
+    nav {
+        background: var(--card);
+        padding: 14px;
+        border-radius: 12px;
+        height: calc(100vh - 160px);
+        overflow: auto
+    }
+
+    nav h3 {
+        margin: 6px 0;
+        color: var(--muted);
+        font-size: 13px
+    }
+
+    nav a {
+        display: block;
+        padding: 8px 10px;
+        border-radius: 8px;
+        color: #cfe6ff;
+        text-decoration: none;
+        margin-bottom: 6px
+    }
+
+    nav a.active {
+        background: linear-gradient(90deg, rgba(96, 165, 250, 0.12), rgba(96, 165, 250, 0.04));
+        box-shadow: 0 4px 18px rgba(32, 58, 86, 0.35)
+    }
+
+    main {
+        background: var(--glass);
+        padding: 18px;
+        border-radius: 12px;
+        min-height: 60vh
+    }
+
+    section {
+        margin-bottom: 22px;
+        padding-bottom: 6px
+    }
+
+    .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+        padding: 14px;
+        border-radius: 10px;
+        margin-bottom: 12px
+    }
+
+    pre {
+        background: #071526;
+        padding: 12px;
+        border-radius: 8px;
+        overflow: auto;
+        color: #dbeafe;
+        font-size: 13px
+    }
+
+    code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 2px 6px;
+        border-radius: 6px
+    }
+
+    .btn {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #0b2b45, #04304a);
+        color: #e6f7ff;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        cursor: pointer
+    }
+
+    .btn.secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        color: var(--muted)
+    }
+
+    .flex {
+        display: flex;
+        gap: 12px;
+        align-items: center
+    }
+
+    .row {
+        display: flex;
+        gap: 12px
+    }
+
+    .kpi {
+        font-size: 13px;
+        color: var(--muted)
+    }
+
+    .out {
+        margin-top: 8px;
+        background: #04121a;
+        border-left: 4px solid rgba(96, 165, 250, 0.18);
+        padding: 10px;
+        border-radius: 6px;
+        color: #cfe6ff;
+        font-family: ui-monospace, monospace
+    }
+
+    .example {
+        background: linear-gradient(180deg, rgba(96, 165, 250, 0.03), rgba(96, 165, 250, 0.01));
+        border-radius: 8px;
+        padding: 10px
+    }
+
+    .tag {
+        font-size: 11px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted)
+    }
+
+    footer {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 18px
+    }
+
+    /* responsive */
+    @media (max-width:900px) {
+        .layout {
+            grid-template-columns: 1fr
+        }
+
+        .wrap {
+            padding: 12px
+        }
+
+        nav {
+            height: auto
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div>
+                <h1>Curso Git — Flujo <code>main</code> → <code>develop</code> → <code>feature/*</code></h1>
+                <div class="meta">Guía interactiva paso a paso con comandos, salidas esperadas y ejemplos ficticios</div>
+            </div>
+            <div style="margin-left:auto" class="kpi">Repositorio: <span class="tag">softwareincorp0223/frontend-ERP</span></div>
+        </header>
+        <div class="layout">
+            <nav id="toc">
+                <h3>Índice</h3>
+                <a href="#prerequisitos" class="active">Prerrequisitos & estado inicial</a>
+                <a href="#crear-develop">Crear y subir <code>develop</code></a>
+                <a href="#clonar">Colaborador clona</a>
+                <a href="#feature">Crear feature (ejemplo login)</a>
+                <a href="#pr-create-pr">Crear Pull Request</a>
+                <a href="#merge-develop">Revisar y mergear a <code>develop</code></a>
+                <a href="#mantener">Mantener ramas (merge / rebase)</a>
+                <a href="#release">Release: merge a <code>main</code> y tag</a>
+                <a href="#limpieza">Limpieza de ramas</a>
+                <a href="#hotfix">Hotfix flujo</a>
+                <a href="#conflicto">Ejemplo conflicto y resolución</a>
+                <a href="#resumen">Resumen y buenas prácticas</a>
+            </nav>
+            <main>
+                <section id="prerequisitos">
+                    <h2>Lección 0 — Prerrequisitos & Verificar estado inicial</h2>
+                    <div class="card">
+                        <p>Instala Git y asegúrate acceso al repo. Comandos para validar el estado inicial después de tu primer <code>git push</code> a <code>main</code>:</p>
+                        <pre><code># desde la carpeta del repo
+git remote -v
+git branch -a
+git status</code></pre>
+                        <p class="kpi">Salida esperada (ficticia):</p>
+                        <div class="out">origin https://github.com/softwareincorp0223/frontend-ERP.git (fetch)
+                            origin https://github.com/softwareincorp0223/frontend-ERP.git (push)
+                            * main
+                            remotes/origin/main
+                            On branch main
+                            nothing to commit, working tree clean
+                        </div>
+                        <div style="margin-top:10px" class="flex">
+                            <button class="btn" data-copy="git remote -v\ngit branch -a\ngit status">Copiar comandos</button>
+                            <button class="btn secondary" onclick="scrollToId('crear-develop')">Siguiente: crear develop</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="crear-develop">
+                    <h2>Lección 1 — Crear la rama <code>develop</code> y subirla</h2>
+                    <div class="card">
+                        <p>Comandos y salidas esperadas para crear <code>develop</code> a partir de <code>main</code>:</p>
+                        <pre><code>git checkout -b develop
+
+git push -u origin develop
+
+git branch -a</code></pre>
+                        <p class="kpi">Salida esperada (ficticia):</p>
+                        <div class="out">Switched to a new branch 'develop'
+                            To https://github.com/softwareincorp0223/frontend-ERP.git
+                            * [new branch] develop -> develop
+                            Branch 'develop' set up to track remote branch 'develop' from 'origin'.
+                            develop
+                            * main
+                            remotes/origin/develop
+                            remotes/origin/main</div>
+                        <div class="row" style="margin-top:10px">
+                            <button class="btn" data-copy="git checkout -b develop\ngit push -u origin develop\ngit branch -a">Copiar comandos</button>
+                            <button class="btn secondary" onclick="scrollToId('clonar')">Siguiente: clonación</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="clonar">
+                    <h2>Lección 2 — Colaborador clona el repo</h2>
+                    <div class="card">
+                        <p>Comandos para el colaborador:</p>
+                        <pre><code>git clone https://github.com/softwareincorp0223/frontend-ERP.git
+cd frontend-ERP
+git branch -a</code></pre>
+                        <p class="kpi">Salida esperada (ficticia):</p>
+                        <div class="out">Cloning into 'frontend-ERP'...
+                            * main
+                            remotes/origin/develop
+                            remotes/origin/main</div>
+                        <div style="margin-top:10px" class="flex">
+                            <button class="btn" data-copy="git clone https://github.com/softwareincorp0223/frontend-ERP.git\ncd frontend-ERP\ngit branch -a">Copiar comandos</button>
+                            <button class="btn secondary" onclick="scrollToId('feature')">Siguiente: crear feature</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="feature">
+                    <h2>Lección 3 — Crear <code>feature/login</code>, editar, commitear y pushear</h2>
+                    <div class="card">
+                        <p>Ejemplo práctico: vamos a crear <code>src/login.js</code> con una función mock. Sigue estos pasos:</p>
+                        <pre><code># partir de develop
+git checkout develop
+git pull origin develop
+
+# crear rama de feature
+git checkout -b feature/login
+
+# crear archivo y commitear
+mkdir -p src
+cat > src/login.js <<'EOF'
+export function mockLogin(user, pass) {
+  return user === 'admin' && pass === 'secret';
+}
+EOF
+
+git add src/login.js
+git commit -m "feat(login): add mock login util for local testing"
+
+git push -u origin feature/login</code></pre>
+                        <p class="kpi">Salida esperada (ficticia):</p>
+                        <div class="out">On branch feature/login
+                            Untracked files:
+                            src/
+                            [feature/login 1a2b3c4] feat(login): add mock login util for local testing
+                            1 file changed, 7 insertions(+)
+                            create mode 100644 src/login.js
+                            To https://github.com/softwareincorp0223/frontend-ERP.git
+                            * [new branch] feature/login -> feature/login
+                            Branch 'feature/login' set up to track remote branch 'feature/login' from 'origin'.</div>
+                        <div style="margin-top:10px" class="row">
+                            <button class="btn" data-copy="# partir de develop\ngit checkout develop\ngit pull origin develop\n\n# crear rama de feature\ngit checkout -b feature/login\n\n# crear archivo y commitear\nmkdir -p src\ncat > src/login.js <<'EOF'\nexport function mockLogin(user, pass) {\n  return user === 'admin' && pass === 'secret';\n}\nEOF\n\ngit add src/login.js\ngit commit -m \" feat(login): add mock login util for local testing\"\n\ngit push -u origin feature/login">Copiar comandos</button> <button class="btn secondary" onclick="scrollToId('pr-create-pr')">Siguiente: PR</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="pr-create-pr">
+                    <h2>Lección 4 — Crear Pull Request (feature → develop)</h2>
+                    <div class="card">
+                        <p>Opción A: desde la interfaz web de GitHub (recomendado). Opción B: desde la terminal con <code>gh</code> CLI.</p>
+                        <pre><code>gh pr create --base develop --head feature/login --title "feat(login): add mock login util" --body "Agregar util de login falso para pruebas unitarias"</code></pre>
+                        <p class="kpi">Salida esperada (ficticia):</p>
+                        <div class="out">Created pull request #3: feat(login): add mock login util
+                            https://github.com/softwareincorp0223/frontend-ERP/pull/3</div>
+                        <div style="margin-top:10px" class="flex">
+                            <button class="btn" data-copy="gh pr create --base develop --head feature/login --title \" feat(login): add mock login util\" --body \"Agregar util de login falso para pruebas unitarias\"">Copiar comandos</button>
+                            <button class="btn secondary" onclick="scrollToId('merge-develop')">Siguiente: merge a develop</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="merge-develop">
+                    <h2>Lección 5 — Revisar y mergear PR a <code>develop</code></h2>
+                    <div class="card">
+                        <p>Dos formas: fusionar desde GitHub o hacerlo localmente. Ejemplo de merge local:</p>
+                        <pre><code>git checkout develop
+git pull origin develop
+
+git fetch origin feature/login:feature/login
+
+git merge --no-ff feature/login -m "chore: merge feature/login into develop"
+
+git push origin develop</code></pre>
+                        <p class="kpi">Salida esperada (ficticia):</p>
+                        <div class="out">Merge made by the 'recursive' strategy.
+                            src/login.js | 7 +++++++
+                            1 file changed, 7 insertions(+)</div>
+                        <div style="margin-top:10px" class="row">
+                            <button class="btn" data-copy="git checkout develop\ngit pull origin develop\n\ngit fetch origin feature/login:feature/login\n\ngit merge --no-ff feature/login -m \" chore: merge feature/login into develop\"\n\ngit push origin develop">Copiar comandos</button>
+                            <button class="btn secondary" onclick="scrollToId('mantener')">Siguiente: mantenimiento</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="mantener">
+                    <h2>Lección 6 — Mantener ramas actualizadas (merge vs rebase)</h2>
+                    <div class="card">
+                        <p>Actualizar tu rama feature con los últimos cambios de <code>develop</code>.</p>
+                        <div class="example">
+                            <strong>Merge (sencillo):</strong>
+                            <pre><code>git checkout feature/login
+git fetch origin
+git merge origin/develop
+git push origin feature/login</code></pre>
+                            <strong>Rebase (historial más lineal):</strong>
+                            <pre><code>git checkout feature/login
+git fetch origin
+git rebase origin/develop
+# resolver conflictos si aparecen
+git push --force-with-lease origin feature/login</code></pre>
+                        </div>
+                        <p class="kpi">Consejo: si no están acostumbrados a reescribir historia, privilegien <code>merge</code>.</p>
+                        <div style="margin-top:10px" class="row">
+                            <button class="btn" data-copy="git checkout feature/login\ngit fetch origin\ngit merge origin/develop\ngit push origin feature/login">Copiar merge</button>
+                            <button class="btn" data-copy="git checkout feature/login\ngit fetch origin\ngit rebase origin/develop\ngit push --force-with-lease origin feature/login">Copiar rebase</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="release">
+                    <h2>Lección 7 — Release: merge <code>develop</code> → <code>main</code> y tag</h2>
+                    <div class="card">
+                        <p>Pasos cuando <code>develop</code> está probado:</p>
+                        <pre><code>git checkout main
+git pull origin main
+
+git checkout develop
+git pull origin develop
+
+# merge a main
+git checkout main
+git merge --no-ff develop -m "release: merge develop into main (v0.1.0)"
+
+# tag
+git tag -a v0.1.0 -m "v0.1.0 - primera release"
+ 
+git push origin main
+git push origin v0.1.0</code></pre>
+                        <p class="kpi">Salida esperada (ficticia):</p>
+                        <div class="out">Merge made by the 'recursive' strategy.
+                            ... files changed ...
+                            * [new tag] v0.1.0 -> v0.1.0</div>
+                        <div style="margin-top:10px" class="row">
+                            <button class="btn" data-copy="git checkout main\ngit pull origin main\n\ngit checkout develop\ngit pull origin develop\n\n# merge a main\ngit checkout main\ngit merge --no-ff develop -m \" release: merge develop into main (v0.1.0)\"\n\n# tag\ngit tag -a v0.1.0 -m \"v0.1.0 - primera release\"\n\n git push origin main\ngit push origin v0.1.0">Copiar comandos</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="limpieza">
+                    <h2>Lección 8 — Limpieza: borrar ramas feature</h2>
+                    <div class="card">
+                        <pre><code>git push origin --delete feature/login
+git branch -d feature/login</code></pre>
+                        <div class="out">Deleted branch feature/login (was abc1234).
+                            Deleted remote branch feature/login (was abc1234).</div>
+                        <div style="margin-top:10px" class="row">
+                            <button class="btn" data-copy="git push origin --delete feature/login\ngit branch -d feature/login">Copiar comandos</button>
+                        </div>
+                    </div>
+                </section>
+                <section id="hotfix">
+                    <h2>Lección 9 — Hotfix para producción</h2>
+                    <div class="card">
+                        <p>Flujo para corrección urgente desde <code>main</code>:</p>
+                        <pre><code>git checkout main
+git pull origin main
+
+git checkout -b hotfix/fix-login
+# aplicar fix
+git add .
+git commit -m "fix(login): fix faulty mock login edge case"
+
+git push -u origin hotfix/fix-login
+# abrir PR a main o merge directo y luego:
+
+git checkout develop
+git pull origin develop
+git merge main
+git push origin develop</code></pre>
+                        <div class="out">(Después del merge a main) develop se actualiza con el fix para no perderlo.</div>
+                    </div>
+                </section>
+                <section id="conflicto">
+                    <h2>Lección 10 — Ejemplo didáctico de conflicto y resolución</h2>
+                    <div class="card">
+                        <p>Reproducimos un conflicto en <code>README.md</code> y lo resolvemos:</p>
+                        <pre><code># desde develop
+# crear feature/a
+git checkout -b feature/a
+echo "Feature A line" >> README.md
+git add README.md
+git commit -m "feat: add line from feature A"
+git push -u origin feature/a
+
+# crear feature/b
+git checkout develop
+git checkout -b feature/b
+echo "Feature B line" >> README.md
+git add README.md
+git commit -m "feat: add line from feature B"
+git push -u origin feature/b
+
+# merge feature/a a develop
+git checkout develop
+git merge --no-ff feature/a
+git push origin develop
+
+# intentar merge feature/b a develop -> conflicto
+git merge feature/b</code></pre>
+                        <p class="kpi">Salida esperada de conflicto:</p>
+                        <div class="out">Auto-merging README.md
+                            CONFLICT (content): Merge conflict in README.md
+                            Automatic merge failed; fix conflicts and then commit the result.</div>
+                        <p>Resolver editando el archivo (quitar marcadores &lt;&lt;&lt;&lt;&lt;&lt; ... &gt;&gt;&gt;&gt;&gt;) y luego:</p>
+                        <pre><code>git add README.md
+git commit -m "fix: resolve conflict between feature/a and feature/b"
+git push origin develop</code></pre>
+                    </div>
+                </section>
+                <section id="resumen">
+                    <h2>Resumen y Buenas Prácticas</h2>
+                    <div class="card">
+                        <ul>
+                            <li>Ramas: <code>main</code> (producción), <code>develop</code> (integración), <code>feature/*</code>, <code>hotfix/*</code>.</li>
+                            <li>Commits: mensajes claros, considera <em>conventional commits</em>.</li>
+                            <li>Protege <code>main</code> en GitHub (no push directo, requierir PRs y checks).</li>
+                            <li>Usa CI para tests/lint antes de mergear.</li>
+                            <li>Asigna revisores y mantiene PRs pequeños.</li>
+                        </ul>
+                        <div style="margin-top:12px" class="flex">
+                            <button class="btn" onclick="downloadPage()">Descargar HTML</button>
+                            <button class="btn secondary" onclick="scrollToTop()">Ir arriba</button>
+                        </div>
+                    </div>
+                </section>
+                <footer>
+                    &copy; Curso interactivo — adapta el contenido a tu política de equipo.
+                </footer>
+            </main>
+        </div>
+    </div>
+    <script>
+    // navigation
+    document.querySelectorAll('#toc a').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelectorAll('#toc a').forEach(x => x.classList.remove('active'));
+            a.classList.add('active');
+            const id = a.getAttribute('href').substring(1);
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        })
+    });
+
+    function scrollToId(id) {
+        document.querySelectorAll('#toc a').forEach(x => x.classList.remove('active'));
+        const link = Array.from(document.querySelectorAll('#toc a')).find(a => a.getAttribute('href') == ('#' + id));
+        if (link) link.classList.add('active');
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }) }
+
+    // copy buttons
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(btn.getAttribute('data-copy'));
+                btn.textContent = 'Copiado ✓';
+                setTimeout(() => { btn.textContent = 'Copiar comandos' }, 1400);
+            } catch (e) { alert('No se pudo copiar. Usa Ctrl+C.'); }
+        });
+    });
+
+    // download page
+    function downloadPage() {
+        const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'git_course_frontend_erp.html';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    }
+    </script>
+</body>
+
+</html>
